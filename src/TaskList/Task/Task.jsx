@@ -1,10 +1,7 @@
-// import { useState, useContext } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import styles from "./Task.module.css";
-// import { Context, ContextProvider } from "../../context";
-// import { Context } from "../../context";
 
 Task.propTypes = {
   completed: PropTypes.bool,
@@ -16,7 +13,19 @@ Task.propTypes = {
 };
 
 function Task(props) {
-  // const { removeTask } = useContext(Context);
+  const [minutes, setMinutes] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMinutes(minutes + 1);
+    }, 1500);
+  });
+
+  // localStorage.props.data.minutes
+  //   ? localStorage.props.data.minutes
+  //   : (localStorage.props.data.minutes = minutes);
+    // props.data.minutes = minutes
+    // console.log('localStorage', localStorage)
 
   const [checking, setChecking] = useState(props.completed);
 
@@ -36,7 +45,7 @@ function Task(props) {
     if (event.key === "Enter" && task.trim() != "") {
       props.changeTask(task.trim(), props.id);
       setTask("");
-      setEditingTask(!editingTask)
+      setEditingTask(!editingTask);
     } else return;
   }
 
@@ -64,12 +73,12 @@ function Task(props) {
               props.title
             )}
           </span>
-          <span className={styles.created}>created 5 min ago</span>
+          <span className={styles.created}>created {minutes} min ago</span>
         </label>
         <button
           className={styles.icon + " " + styles.iconEdit}
           onClick={() => {
-            setEditingTask(!editingTask)
+            setEditingTask(!editingTask);
           }}
         ></button>
         <button

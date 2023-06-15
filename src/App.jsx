@@ -7,35 +7,13 @@ import NewTaskForm from "./NewTaskForm/NewTaskForm.jsx";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 
-// import { Context, ContextProvider } from "./context";
-// import { Context } from "./context";
-
 import styles from "./App.module.css";
 
 function App() {
-  const [data, setData] = useState([
-    // {
-    //   id: v1(),
-    //   title: "Completed task",
-    //   completed: true,
-    // },
-    // {
-    //   id: v1(),
-    //   title: "Editing task",
-    //   completed: false,
-    // },
-    // {
-    //   id: v1(),
-    //   title: "Active task",
-    //   completed: false,
-    // },
-  ]);
+  const [data, setData] = useState([]);
 
-  // * этот юзЭффект нельзя использовать со стрикт-модом
-  // * не забыть импортировать юзЭффект
   useEffect(() => {
     const raw = localStorage.getItem("data") || [];
-    // console.log('raw', raw)
     setData(JSON.parse(raw));
   }, []);
 
@@ -60,14 +38,13 @@ function App() {
     setFilter(value);
   }
 
-  
   let dataInTodo = data;
   if (filter == "completed") {
     dataInTodo = data.filter((i) => i.completed == true);
   }
   if (filter == "active") {
     dataInTodo = data.filter((i) => i.completed == false);
-  } 
+  }
 
   function clearCompleted() {
     let filteredData = data.filter((i) => i.completed !== true);
@@ -89,14 +66,11 @@ function App() {
         i.title = editingTask;
       }
     });
-    let newData = [ ...data];
+    let newData = [...data];
     setData(newData);
   }
 
   return (
-    // <Context.Provider value={removeTask}>
-    // <ContextProvider value={removeTask}>
-
     <section className={styles.todoapp}>
       <Header></Header>
       <section className={styles.main}>
@@ -118,8 +92,6 @@ function App() {
         />
       </section>
     </section>
-    // </Context.Provider>
-    // </ContextProvider>
   );
 }
 
