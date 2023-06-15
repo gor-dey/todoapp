@@ -2,6 +2,12 @@ import { useState } from "react";
 
 import styles from './NewTaskForm.module.css'
 
+import PropTypes from "prop-types";
+
+NewTaskForm.propTypes = {
+  addNewTask: PropTypes.func,
+}
+
 function NewTaskForm(props) {
   const [task, setTask] = useState("");
 
@@ -13,7 +19,6 @@ function NewTaskForm(props) {
   }
 
   return (
-    <>
       <input
         type="text"
         className={styles.newTodo}
@@ -23,7 +28,6 @@ function NewTaskForm(props) {
         onChange={(event) => setTask(event.target.value)}
         onKeyDown={logTask}
       />
-    </>
   );
 }
 

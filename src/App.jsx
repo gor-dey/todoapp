@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import { v1 } from "uuid";
 
 import { TaskList } from "./TaskList/TaskList";
@@ -6,26 +7,41 @@ import NewTaskForm from "./NewTaskForm/NewTaskForm.jsx";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
 
+// import { Context, ContextProvider } from "./context";
+// import { Context } from "./context";
+
 import styles from "./App.module.css";
 
 function App() {
   const [data, setData] = useState([
-    {
-      id: v1(),
-      title: "Completed task",
-      completed: true,
-    },
-    {
-      id: v1(),
-      title: "Editing task",
-      completed: false,
-    },
-    {
-      id: v1(),
-      title: "Active task",
-      completed: false,
-    },
+    // {
+    //   id: v1(),
+    //   title: "Completed task",
+    //   completed: true,
+    // },
+    // {
+    //   id: v1(),
+    //   title: "Editing task",
+    //   completed: false,
+    // },
+    // {
+    //   id: v1(),
+    //   title: "Active task",
+    //   completed: false,
+    // },
   ]);
+
+  // * этот юзЭффект нельзя использовать со стрикт-модом
+  // * не забыть импортировать юзЭффект
+  useEffect(() => {
+    const raw = localStorage.getItem("data") || [];
+    // console.log('raw', raw)
+    setData(JSON.parse(raw));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("data", JSON.stringify(data));
+  }, [data]);
 
   const [filter, setFilter] = useState("all");
 
@@ -44,13 +60,14 @@ function App() {
     setFilter(value);
   }
 
+  
   let dataInTodo = data;
   if (filter == "completed") {
     dataInTodo = data.filter((i) => i.completed == true);
   }
   if (filter == "active") {
     dataInTodo = data.filter((i) => i.completed == false);
-  }
+  } 
 
   function clearCompleted() {
     let filteredData = data.filter((i) => i.completed !== true);
@@ -66,34 +83,43 @@ function App() {
     setData([...data]);
   }
 
-  function changeTask() {
-    alert("доделать!");
+  function changeTask(editingTask, editingTaskId) {
+    data.map((i) => {
+      if (i.id == editingTaskId) {
+        i.title = editingTask;
+      }
+    });
+    let newData = [ ...data];
+    setData(newData);
   }
 
   return (
-    <>
-      <section className={styles.todoapp}>
-        <Header></Header>
-        <section className={styles.main}>
-          <NewTaskForm addNewTask={addNewTask} />
+    // <Context.Provider value={removeTask}>
+    // <ContextProvider value={removeTask}>
 
-          <TaskList
-            changeTask={changeTask}
-            data={data}
-            setData={setData}
-            removeTask={removeTask}
-            changeCheckbox={changeCheckbox}
-            dataInTodo={dataInTodo}
-          />
+    <section className={styles.todoapp}>
+      <Header></Header>
+      <section className={styles.main}>
+        <NewTaskForm addNewTask={addNewTask} />
 
-          <Footer
-            changeFilter={changeFilter}
-            clearCompleted={clearCompleted}
-            filter={filter}
-          />
-        </section>
+        <TaskList
+          changeTask={changeTask}
+          data={data}
+          setData={setData}
+          removeTask={removeTask}
+          changeCheckbox={changeCheckbox}
+          dataInTodo={dataInTodo}
+        />
+
+        <Footer
+          changeFilter={changeFilter}
+          clearCompleted={clearCompleted}
+          filter={filter}
+        />
       </section>
-    </>
+    </section>
+    // </Context.Provider>
+    // </ContextProvider>
   );
 }
 
