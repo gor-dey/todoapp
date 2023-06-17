@@ -89,6 +89,7 @@ function App() {
           changeFilter={changeFilter}
           clearCompleted={clearCompleted}
           filter={filter}
+          data={data}
         />
       </section>
     </section>
