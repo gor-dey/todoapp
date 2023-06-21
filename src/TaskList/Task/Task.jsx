@@ -24,8 +24,8 @@ function Task(props) {
   // localStorage.props.data.minutes
   //   ? localStorage.props.data.minutes
   //   : (localStorage.props.data.minutes = minutes);
-    // props.data.minutes = minutes
-    // console.log('localStorage', localStorage)
+  //   props.data.minutes = minutes
+  //   console.log('localStorage', localStorage)
 
   const [checking, setChecking] = useState(props.completed);
 

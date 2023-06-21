@@ -13,9 +13,14 @@ TaskList.propTypes = {
 };
 
 function TaskList(props) {
+  //* let ololo
+  //* console.log('props', props)
+  //* !props.dataInTodo ? (ololo = []) : (ololo = props.dataInTodo);
+
   return (
     <ul className={styles.todoList}>
       {props.dataInTodo.map((i) => {
+      {/* {ololo.map((i) => { */}
         return (
           <Task
             changeTask={props.changeTask}

@@ -11,9 +11,11 @@ import styles from "./App.module.css";
 
 function App() {
   const [data, setData] = useState([]);
+  console.log("data", data);
 
   useEffect(() => {
-    const raw = localStorage.getItem("data") || [];
+    const raw = localStorage.getItem("data") || localStorage.getItem([]);
+    console.log("raw", raw);
     setData(JSON.parse(raw));
   }, []);
 
